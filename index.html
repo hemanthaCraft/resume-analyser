@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATS Resume Analyzer - Beat the Bots, Land Your Dream Job</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 min-h-screen">
+    
+    <!-- Animated Background -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+        <div class="absolute w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000" style="top: 40%; left: 60%;"></div>
+        <div class="absolute w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000" style="top: 60%; left: 20%;"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="relative z-10">
+        
+        <!-- Header -->
+        <header class="container mx-auto px-4 py-6">
+            <nav class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-xl">A</span>
+                    </div>
+                    <span class="text-white font-bold text-xl">ATS Analyzer</span>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="#features" class="text-gray-300 hover:text-white transition">Features</a>
+                    <a href="#how-it-works" class="text-gray-300 hover:text-white transition">How It Works</a>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section id="hero" class="container mx-auto px-4 py-20 text-center">
+            <div class="max-w-4xl mx-auto">
+                <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 animate-fade-in">
+                    Beat the <span class="bg-gradient-to-r from-purple-400 to-blue-400 text-transparent bg-clip-text">ATS Bots</span>
+                </h1>
+                <p class="text-xl text-gray-300 mb-12 animate-fade-in-delay">
+                    Get your resume past Applicant Tracking Systems with AI-powered analysis. 
+                    Detailed insights, actionable improvements, and a higher chance of landing interviews.
+                </p>
+                
+                <!-- Stats -->
+                <div class="grid grid-cols-3 gap-8 mb-16">
+                    <div class="stat-card">
+                        <div class="text-4xl font-bold text-purple-400">98%</div>
+                        <div class="text-gray-400">Accuracy Rate</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="text-4xl font-bold text-blue-400">50+</div>
+                        <div class="text-gray-400">Resumes Analyzed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="text-4xl font-bold text-pink-400">2.5x</div>
+                        <div class="text-gray-400">Job Recommendations</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Upload Section -->
+        <section id="upload-section" class="container mx-auto px-4 pb-20">
+            <div class="max-w-4xl mx-auto">
+                <div class="glass-card p-8 md:p-12">
+                    
+                    <!-- File Upload -->
+                    <div id="upload-zone" class="border-3 border-dashed border-purple-500/30 rounded-2xl p-12 text-center hover:border-purple-500/60 transition-all cursor-pointer mb-8">
+                        <input type="file" id="resume-file" accept=".pdf,.doc,.docx" class="hidden">
+                        <div id="upload-prompt">
+                            <svg class="w-20 h-20 mx-auto mb-4 text-purple-400 animate-bounce-slow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                            </svg>
+                            <h3 class="text-2xl font-bold text-white mb-2">Drop your resume here</h3>
+                            <p class="text-gray-400 mb-4">or click to browse</p>
+                            <div class="flex justify-center space-x-4">
+                                <span class="px-4 py-2 bg-purple-500/20 text-purple-300 rounded-lg text-sm">PDF</span>
+                                <span class="px-4 py-2 bg-blue-500/20 text-blue-300 rounded-lg text-sm">DOCX</span>
+                                <span class="px-4 py-2 bg-pink-500/20 text-pink-300 rounded-lg text-sm">DOC</span>
+                            </div>
+                        </div>
+                        <div id="file-preview" class="hidden">
+                            <div class="flex items-center justify-center space-x-4">
+                                <svg class="w-12 h-12 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <div class="text-left">
+                                    <p class="text-white font-semibold" id="file-name"></p>
+                                    <p class="text-gray-400 text-sm" id="file-size"></p>
+                                </div>
+                                <button id="remove-file" class="text-red-400 hover:text-red-300 transition">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Job Description -->
+                    <div class="mb-8">
+                        <label class="block text-white font-semibold mb-3">Paste Job Description</label>
+                        <textarea 
+                            id="job-description" 
+                            rows="8" 
+                            class="w-full bg-white/5 border border-purple-500/30 rounded-xl p-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+                            placeholder="Paste the complete job description here...
+
+Example: We are looking for a Senior Software Engineer with 5+ years of experience in Python, React, and AWS. Strong problem-solving skills and experience with agile methodologies required..."
+                        ></textarea>
+                        <div class="flex justify-between items-center mt-2">
+                            <span class="text-gray-400 text-sm" id="char-count">0 characters</span>
+                            <span class="text-gray-400 text-sm">More details = Better analysis</span>
+                        </div>
+                    </div>
+
+                    <!-- Analyze Button -->
+                    <button 
+                        id="analyze-btn" 
+                        class="w-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-bold py-4 rounded-xl hover:shadow-2xl hover:shadow-purple-500/50 transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                        disabled
+                    >
+                        <span id="btn-text">Analyze My Resume</span>
+                        <span id="btn-loading" class="hidden">
+                            <svg class="animate-spin h-5 w-5 inline-block mr-2" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            Analyzing... This may take 30-60 seconds
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section id="results-section" class="container mx-auto px-4 pb-20 hidden">
+            <div class="max-w-7xl mx-auto">
+                
+                <!-- Score Cards -->
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <!-- ATS Score -->
+                    <div class="glass-card p-6 text-center">
+                        <h3 class="text-gray-400 mb-4">ATS Score</h3>
+                        <div class="relative w-32 h-32 mx-auto mb-4">
+                            <svg class="transform -rotate-90 w-32 h-32">
+                                <circle cx="64" cy="64" r="56" stroke="currentColor" stroke-width="8" fill="transparent" class="text-gray-700"></circle>
+                                <circle id="score-circle" cx="64" cy="64" r="56" stroke="currentColor" stroke-width="8" fill="transparent" class="text-purple-500 transition-all duration-1000" style="stroke-dasharray: 351.68; stroke-dashoffset: 351.68;"></circle>
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <span id="ats-score" class="text-4xl font-bold text-white">0</span>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-400" id="score-label">Calculating...</p>
+                    </div>
+
+                    <!-- Keyword Match -->
+                    <div class="glass-card p-6 text-center">
+                        <h3 class="text-gray-400 mb-4">Keyword Match</h3>
+                        <div class="text-5xl font-bold text-blue-400 mb-2" id="keyword-match">0%</div>
+                        <p class="text-sm text-gray-400">Keywords found in resume</p>
+                        <div class="mt-4">
+                            <div class="w-full bg-gray-700 rounded-full h-2">
+                                <div id="keyword-bar" class="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-1000" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Missing Keywords -->
+                    <div class="glass-card p-6 text-center">
+                        <h3 class="text-gray-400 mb-4">Missing Keywords</h3>
+                        <div class="text-5xl font-bold text-pink-400 mb-2" id="missing-count">0</div>
+                        <p class="text-sm text-gray-400">Critical keywords to add</p>
+                        <div class="mt-4">
+                            <span class="text-xs text-yellow-400">Action required</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Analysis Tabs -->
+                <div class="glass-card p-8">
+                    <!-- Tab Headers -->
+                    <div class="flex space-x-4 mb-8 border-b border-gray-700 overflow-x-auto">
+                        <button class="tab-btn active" data-tab="overview">
+                            Overview
+                        </button>
+                        <button class="tab-btn" data-tab="keywords">
+                            Keywords
+                        </button>
+                        <button class="tab-btn" data-tab="detailed">
+                            Detailed Analysis
+                        </button>
+                        <button class="tab-btn" data-tab="improvements">
+                            Action Items
+                        </button>
+                        <button class="tab-btn" data-tab="jobs">
+                            Job Matches
+                        </button>
+                    </div>
+
+                    <!-- Tab Content -->
+                    <div id="tab-content">
+                        <!-- Overview Tab -->
+                        <div id="overview-tab" class="tab-content active">
+                            <h2 class="text-2xl font-bold text-white mb-6">Quick Overview</h2>
+                            
+                            <div class="space-y-4 mb-8" id="feedback-list">
+                                <!-- Feedback items will be inserted here -->
+                            </div>
+
+                            <div class="bg-purple-500/10 border border-purple-500/30 rounded-lg p-6">
+                                <h3 class="text-xl font-bold text-purple-300 mb-3">Quick Tips</h3>
+                                <ul class="space-y-2 text-gray-300">
+                                    <li>• Focus on adding missing keywords naturally</li>
+                                    <li>• Use action verbs to start bullet points</li>
+                                    <li>• Quantify achievements with numbers and percentages</li>
+                                    <li>• Keep formatting simple and ATS-friendly</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Keywords Tab -->
+                        <div id="keywords-tab" class="tab-content hidden">
+                            <h2 class="text-2xl font-bold text-white mb-6">Keyword Analysis</h2>
+                            
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <!-- Matching Keywords -->
+                                <div>
+                                    <h3 class="text-xl font-bold text-green-400 mb-4">Found Keywords</h3>
+                                    <div id="matching-keywords" class="flex flex-wrap gap-2">
+                                        <!-- Keywords will be inserted here -->
+                                    </div>
+                                </div>
+
+                                <!-- Missing Keywords -->
+                                <div>
+                                    <h3 class="text-xl font-bold text-red-400 mb-4">Missing Keywords</h3>
+                                    <div id="missing-keywords" class="flex flex-wrap gap-2">
+                                        <!-- Keywords will be inserted here -->
+                                    </div>
+                                    <p class="text-sm text-gray-400 mt-4">💡 Add these naturally throughout your resume</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Detailed Analysis Tab -->
+                        <div id="detailed-tab" class="tab-content hidden">
+                            <h2 class="text-2xl font-bold text-white mb-6">AI-Powered Detailed Analysis</h2>
+                            <div id="detailed-analysis" class="prose prose-invert max-w-none">
+                                <div class="flex items-center justify-center py-12">
+                                    <svg class="animate-spin h-8 w-8 text-purple-500" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    <span class="ml-3 text-gray-400">Loading detailed analysis...</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Improvements Tab -->
+                        <div id="improvements-tab" class="tab-content hidden">
+                            <h2 class="text-2xl font-bold text-white mb-6">Priority Action Items</h2>
+                            <div id="improvements-content">
+                                <p class="text-gray-400">Check the Detailed Analysis tab for specific improvement recommendations.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Job Recommendations Tab -->
+<div id="jobs-tab" class="tab-content hidden">
+    <div class="mb-6 flex items-center justify-between">
+        <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+            <span>Recommended Jobs For You</span>
+        </h2>
+        <button 
+            id="refresh-jobs-btn" 
+            onclick="loadJobRecommendations()"
+            class="px-4 py-2 bg-purple-500/20 text-purple-300 rounded-lg hover:bg-purple-500/30 transition flex items-center gap-2"
+        >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+            </svg>
+            Refresh
+        </button>
+    </div>
+
+    <!-- Search Parameters Display -->
+    <div id="search-params-box" class="bg-purple-500/10 border border-purple-500/30 rounded-lg p-5 mb-6 hidden">
+        <h3 class="text-lg font-bold text-purple-300 mb-3">Search Criteria</h3>
+        <div class="grid md:grid-cols-3 gap-4 text-sm">
+            <div>
+                <span class="text-gray-400">Query:</span>
+                <span id="search-query" class="text-white font-semibold ml-2"></span>
+            </div>
+            <div>
+                <span class="text-gray-400">Experience:</span>
+                <span id="search-experience" class="text-white font-semibold ml-2"></span>
+            </div>
+            <div>
+                <span class="text-gray-400">Top Skills:</span>
+                <div id="search-skills" class="flex flex-wrap gap-1 mt-1"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Job Listings Container -->
+    <div id="jobs-container" class="space-y-4">
+        <!-- Loading state -->
+        <div id="jobs-loading" class="flex flex-col items-center justify-center py-16">
+            <svg class="animate-spin h-12 w-12 text-purple-500 mb-4" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <p class="text-gray-400 text-lg">Finding perfect jobs for you...</p>
+        </div>
+
+        <!-- Jobs will be inserted here -->
+    </div>
+
+    <!-- No Jobs Found State -->
+    <div id="no-jobs-found" class="hidden text-center py-16">
+        <div class="text-6xl mb-4">🔍</div>
+        <h3 class="text-xl font-bold text-white mb-2">No Jobs Found</h3>
+        <p class="text-gray-400 mb-6">We couldn't find matching jobs at the moment.</p>
+        <button 
+            onclick="loadJobRecommendations()"
+            class="px-6 py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white font-bold rounded-lg hover:shadow-lg transition"
+        >
+            Try Again
+        </button>
+    </div>
+
+    <!-- Info Box -->
+    <div class="mt-8 bg-blue-500/10 border border-blue-500/30 rounded-lg p-5">
+        <h3 class="text-lg font-bold text-blue-300 mb-3 flex items-center gap-2">
+            
+            <span>How Job Matching Works</span>
+        </h3>
+        <ul class="space-y-2 text-sm text-gray-300">
+            <li class="flex items-start gap-2">
+                <span class="text-purple-400 mt-1">•</span>
+                <span>We analyze your resume's <strong class="text-white">top skills</strong> and <strong class="text-white">experience level</strong></span>
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="text-purple-400 mt-1">•</span>
+                <span>Jobs are <strong class="text-white">semantically matched</strong> to your profile</span>
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="text-purple-400 mt-1">•</span>
+                <span>Each job gets a <strong class="text-white">match score</strong> based on keyword alignment</span>
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="text-purple-400 mt-1">•</span>
+                <span>Results are updated in <strong class="text-white">real-time</strong> from job boards</span>
+            </li>
+        </ul>
+    </div>
+</div>
+
+                <!-- Action Buttons -->
+                <!-- Action Buttons -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
+    <!-- Button 1: Analyze Another -->
+    <button 
+        id="new-analysis-btn" 
+        class="w-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-bold py-4 rounded-xl hover:shadow-lg transition flex items-center justify-center gap-2"
+    >
+        
+        <span>Analyze Another</span>
+    </button>
+    
+    <!-- Button 2: Download PDF -->
+    <button 
+        id="download-report-btn"
+        onclick="downloadPDFReport()"
+        class="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold py-4 rounded-xl hover:shadow-lg transition flex items-center justify-center gap-2"
+    >
+        
+        <span>Download PDF</span>
+    </button>
+    
+    <!-- Button 3: Email Report -->
+    <button 
+        id="email-report-btn"
+        onclick="openEmailModal()"
+        class="w-full bg-gradient-to-r from-green-600 to-teal-600 text-white font-bold py-4 rounded-xl hover:shadow-lg transition flex items-center justify-center gap-2"
+    >
+        
+        <span>Email Report</span>
+    </button>
+    
+    <!-- Button 4: AI Rewrite -->
+    <button 
+        id="ai-rewrite-btn"
+        onclick="openRewriteModal()"
+        class="w-full bg-gradient-to-r from-yellow-600 to-orange-600 text-white font-bold py-4 rounded-xl hover:shadow-lg transition flex items-center justify-center gap-2"
+    >
+       
+        <span>AI Rewrite</span>
+    </button>
+</div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="container mx-auto px-4 py-20">
+            <h2 class="text-4xl font-bold text-white text-center mb-16">Why Choose Our ATS Analyzer?</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-card p-8 text-center hover:scale-105 transition">
+                    <div class="text-5xl mb-4">🤖</div>
+                    <h3 class="text-xl font-bold text-white mb-3">AI-Powered Analysis</h3>
+                    <p class="text-gray-400">Google Gemini provides human-like insights and detailed recommendations</p>
+                </div>
+                <div class="glass-card p-8 text-center hover:scale-105 transition">
+                    <div class="text-5xl mb-4">⚡</div>
+                    <h3 class="text-xl font-bold text-white mb-3">Instant Results</h3>
+                    <p class="text-gray-400">Get comprehensive analysis in under 60 seconds</p>
+                </div>
+                <div class="glass-card p-8 text-center hover:scale-105 transition">
+                    <div class="text-5xl mb-4">🎯</div>
+                    <h3 class="text-xl font-bold text-white mb-3">Actionable Insights</h3>
+                    <p class="text-gray-400">Specific, prioritized improvements you can implement immediately</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="container mx-auto px-4 py-8 text-center text-gray-400">
+            <p>Made with ❤️ by ATS Analyzer • Powered by Google Gemini AI</p>
+            <p class="text-sm mt-2">Your data is processed securely and never stored permanently</p>
+        </footer>
+    </div>
+<div id="email-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="glass-card p-8 max-w-md w-full mx-4 animate-fade-in">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-2xl font-bold text-white flex items-center gap-2">
+                <span>📧</span>
+                <span>Email Report</span>
+            </h3>
+            <button onclick="closeEmailModal()" class="text-gray-400 hover:text-white transition">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        
+        <div class="mb-6">
+            <label class="block text-white font-semibold mb-2">Enter your email address:</label>
+            <input 
+                type="email" 
+                id="recipient-email" 
+                placeholder="your.email@example.com"
+                class="w-full bg-white/10 border border-purple-500/30 rounded-lg p-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+            />
+            <p class="text-sm text-gray-400 mt-2">We'll send your detailed ATS analysis report to this email.</p>
+        </div>
+        
+        <div id="email-status" class="hidden mb-4 p-3 rounded-lg"></div>
+        
+        <div class="flex gap-3">
+            <button 
+                onclick="sendEmailReport()" 
+                id="send-email-btn"
+                class="flex-1 bg-gradient-to-r from-green-600 to-teal-600 text-white font-bold py-3 rounded-lg hover:shadow-lg transition-all"
+            >
+                <span id="send-btn-text">Send Report</span>
+                <span id="send-btn-loading" class="hidden">
+                    <svg class="animate-spin h-5 w-5 inline-block mr-2" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Sending...
+                </span>
+            </button>
+            <button 
+                onclick="closeEmailModal()" 
+                class="px-6 py-3 bg-gray-600 text-white font-bold rounded-lg hover:bg-gray-700 transition"
+            >
+                Cancel
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 🤖 AI REWRITE MODAL - NEW FEATURE -->
+<!-- Add this AFTER email modal (around line 409) -->
+<!-- ============================================================ -->
+
+<!-- AI Rewrite Modal -->
+<div id="rewrite-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="glass-card p-8 max-w-3xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-2xl font-bold text-white flex items-center gap-2">
+                <span>🤖</span>
+                <span>AI Auto-Rewrite</span>
+            </h3>
+            <button onclick="closeRewriteModal()" class="text-gray-400 hover:text-white transition">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Section Type Selection -->
+        <div class="mb-6">
+            <label class="block text-white font-semibold mb-3">What do you want to rewrite?</label>
+            <div class="grid grid-cols-3 gap-3">
+                <button 
+                    onclick="selectRewriteSection('summary')" 
+                    class="rewrite-section-btn p-4 bg-white/5 border border-purple-500/30 rounded-lg hover:bg-purple-500/20 transition"
+                    data-section="summary"
+                >
+                    <div class="text-2xl mb-2">📝</div>
+                    <div class="font-semibold">Summary</div>
+                </button>
+                <button 
+                    onclick="selectRewriteSection('experience')" 
+                    class="rewrite-section-btn p-4 bg-white/5 border border-purple-500/30 rounded-lg hover:bg-purple-500/20 transition"
+                    data-section="experience"
+                >
+                    <div class="text-2xl mb-2">💼</div>
+                    <div class="font-semibold">Experience</div>
+                </button>
+                <button 
+                    onclick="selectRewriteSection('skills')" 
+                    class="rewrite-section-btn p-4 bg-white/5 border border-purple-500/30 rounded-lg hover:bg-purple-500/20 transition"
+                    data-section="skills"
+                >
+                    <div class="text-2xl mb-2">⚡</div>
+                    <div class="font-semibold">Skills</div>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Current Text Input -->
+        <div class="mb-6">
+            <label class="block text-white font-semibold mb-2">Current Text:</label>
+            <textarea 
+                id="rewrite-current-text" 
+                rows="6" 
+                class="w-full bg-white/10 border border-purple-500/30 rounded-lg p-4 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+                placeholder="Paste the section you want to improve..."
+            ></textarea>
+        </div>
+        
+        <!-- Rewrite Result (Initially Hidden) -->
+        <div id="rewrite-result" class="hidden mb-6">
+            <div class="bg-green-500/10 border border-green-500/30 rounded-lg p-6">
+                <h4 class="text-lg font-bold text-green-400 mb-3 flex items-center gap-2">
+                    <span>✨</span>
+                    <span>AI-Rewritten Version</span>
+                </h4>
+                <div id="rewritten-text" class="text-white leading-relaxed mb-4 p-4 bg-black/20 rounded-lg"></div>
+                
+                <!-- Improvements List -->
+                <div id="improvements-list" class="mb-4"></div>
+                
+                <!-- Copy Button -->
+                <button 
+                    onclick="copyRewrittenText()" 
+                    class="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition flex items-center gap-2"
+                >
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
+                    </svg>
+                    Copy to Clipboard
+                </button>
+            </div>
+        </div>
+        
+        <!-- Status Message -->
+        <div id="rewrite-status" class="hidden mb-4 p-3 rounded-lg"></div>
+        
+        <!-- Action Buttons -->
+        <div class="flex gap-3">
+            <button 
+                onclick="generateRewrite()" 
+                id="generate-rewrite-btn"
+                class="flex-1 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold py-3 rounded-lg hover:shadow-lg transition-all"
+            >
+                <span id="rewrite-btn-text">✨ Generate Rewrite</span>
+                <span id="rewrite-btn-loading" class="hidden">
+                    <svg class="animate-spin h-5 w-5 inline-block mr-2" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Rewriting with AI...
+                </span>
+            </button>
+            <button 
+                onclick="closeRewriteModal()" 
+                class="px-6 py-3 bg-gray-600 text-white font-bold rounded-lg hover:bg-gray-700 transition"
+            >
+                Close
+            </button>
+        </div>
+        
+        <!-- Info Box -->
+        <div class="mt-6 bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
+            <p class="text-sm text-gray-300 flex items-start gap-2">
+                <span class="text-xl">💡</span>
+                <span><strong>Pro Tip:</strong> The AI will rewrite your text to be more ATS-friendly, incorporate relevant keywords, and use stronger action verbs with quantifiable results.</span>
+            </p>
+        </div>
+    </div>
+</div>
+    <script src="app.js"></script>
+</body>
+</html>

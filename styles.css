@@ -1,0 +1,388 @@
+/* Custom Animations */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes blob {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+    }
+    33% {
+        transform: translate(30px, -50px) scale(1.1);
+    }
+    66% {
+        transform: translate(-20px, 20px) scale(0.9);
+    }
+}
+
+@keyframes bounce-slow {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.animate-fade-in {
+    animation: fade-in 0.8s ease-out;
+}
+
+.animate-fade-in-delay {
+    animation: fade-in 0.8s ease-out 0.2s both;
+}
+
+.animate-blob {
+    animation: blob 7s infinite;
+}
+
+.animation-delay-2000 {
+    animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+    animation-delay: 4s;
+}
+
+.animate-bounce-slow {
+    animation: bounce-slow 3s ease-in-out infinite;
+}
+
+/* Glass Morphism */
+.glass-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.glass-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+/* Stats Cards */
+.stat-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 40px rgba(139, 92, 246, 0.3);
+}
+
+/* Upload Zone */
+#upload-zone {
+    transition: all 0.3s ease;
+}
+
+#upload-zone:hover {
+    background: rgba(139, 92, 246, 0.05);
+}
+
+#upload-zone.drag-over {
+    background: rgba(139, 92, 246, 0.1);
+    border-color: #8b5cf6;
+    transform: scale(1.02);
+}
+
+/* Tabs */
+.tab-btn {
+    padding: 1rem 1.5rem;
+    color: #9ca3af;
+    font-weight: 600;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.tab-btn:hover {
+    color: #ffffff;
+    background: rgba(139, 92, 246, 0.1);
+}
+
+.tab-btn.active {
+    color: #ffffff;
+    border-bottom-color: #8b5cf6;
+    background: rgba(139, 92, 246, 0.1);
+}
+
+.tab-content {
+    animation: fade-in 0.5s ease-out;
+}
+
+/* Keyword Tags */
+.keyword-tag {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.keyword-found {
+    background: rgba(16, 185, 129, 0.2);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.keyword-missing {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.keyword-tag:hover {
+    transform: scale(1.05);
+}
+
+/* Feedback Items */
+.feedback-item {
+    padding: 1rem;
+    border-radius: 0.75rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-left: 4px solid;
+    transition: all 0.3s ease;
+}
+
+.feedback-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateX(5px);
+}
+
+.feedback-success {
+    border-color: #10b981;
+}
+
+.feedback-warning {
+    border-color: #f59e0b;
+}
+
+.feedback-error {
+    border-color: #ef4444;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(139, 92, 246, 0.5);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(139, 92, 246, 0.7);
+}
+
+/* Loading Shimmer */
+.shimmer {
+    background: linear-gradient(90deg, 
+        rgba(255, 255, 255, 0.05) 0%, 
+        rgba(255, 255, 255, 0.1) 50%, 
+        rgba(255, 255, 255, 0.05) 100%);
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite;
+}
+
+/* Prose Styling for Markdown Content */
+.prose {
+    color: #d1d5db;
+    line-height: 1.75;
+}
+
+.prose h1, .prose h2, .prose h3, .prose h4 {
+    color: #ffffff;
+    font-weight: 700;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.prose h2 {
+    font-size: 1.75rem;
+    border-bottom: 2px solid rgba(139, 92, 246, 0.3);
+    padding-bottom: 0.5rem;
+}
+
+.prose h3 {
+    font-size: 1.5rem;
+    color: #a78bfa;
+}
+
+.prose h4 {
+    font-size: 1.25rem;
+    color: #c4b5fd;
+}
+
+.prose p {
+    margin-bottom: 1rem;
+}
+
+.prose ul, .prose ol {
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.prose li {
+    margin-bottom: 0.5rem;
+}
+
+.prose strong {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.prose code {
+    background: rgba(139, 92, 246, 0.2);
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    color: #c4b5fd;
+}
+
+.prose pre {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+}
+
+.prose blockquote {
+    border-left: 4px solid #8b5cf6;
+    padding-left: 1rem;
+    color: #9ca3af;
+    font-style: italic;
+}
+
+.prose a {
+    color: #60a5fa;
+    text-decoration: underline;
+}
+
+.prose a:hover {
+    color: #93c5fd;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .stat-card {
+        padding: 1rem;
+    }
+    
+    .glass-card {
+        padding: 1.5rem;
+    }
+    
+    .tab-btn {
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* Email Modal Animations */
+#email-modal.flex {
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+#email-modal .glass-card {
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+
+/* Job Card Styling */
+.job-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.job-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.1), transparent);
+    transition: left 0.5s;
+}
+
+.job-card:hover::before {
+    left: 100%;
+}
+
+.job-card:hover {
+    border-color: rgba(139, 92, 246, 0.5);
+}
+
+/* Line clamp for job descriptions */
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Scale on hover */
+.hover\:scale-102:hover {
+    transform: scale(1.02);
+}
+
+
+/* ============================
+   🌆 GLOBAL BACKGROUND STYLE
+   ============================ */
+body {
+    background-color: #0d1117;
+    color: #e5e7eb;
+}
