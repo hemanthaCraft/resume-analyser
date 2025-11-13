@@ -1,3 +1,5 @@
+pandi nayala pandi pirraloda
+
 # resume-analyser
 🧠 AI-Powered Resume Analyzer (Flask + Gemini + NLP)
 
